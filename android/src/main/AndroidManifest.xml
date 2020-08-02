@@ -1,0 +1,10 @@
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.ForegroundEventLib">
+<application>
+    <service
+        android:name="com.ForegroundEventLib.ForegroundSvc"
+        android:enabled="true" />
+    <service android:name="com.ForegroundEventLib.BackgroundWorker" />
+</application>
+</manifest>

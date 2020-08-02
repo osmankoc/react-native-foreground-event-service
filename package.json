@@ -1,0 +1,18 @@
+
+{
+  "name": "react-native-foreground-event-service",
+  "version": "1.0.5",
+  "description": "React Native Foreground Service with interval event",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native", "foreground", "service", "scheduled task" ,"scheduled", "background"
+  ],
+  "author": "Osman Koç",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "^0.41.2"
+  }
+}
