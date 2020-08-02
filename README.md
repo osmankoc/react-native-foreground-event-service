@@ -1,7 +1,9 @@
 
 # react-native-foreground-event-service
 
-This project is currently under development. so please be patient about that. I am currently trying to solve a lot of obvious issues.
+This library enables you to run a foreground service and schedule a job in given interval. In the library AlarmManager is used to schedule the jobs. So you may want to have a look at the Android AlarmManager documentation at this url; https://developer.android.com/reference/android/app/AlarmManager
+
+Note: As you might know IOS does not have such property as Foreground service, so this library for only Android development.
 
 ## Getting started
 
@@ -40,7 +42,7 @@ import ForegroundEventService from 'react-native-foreground-event-service';
     });
 // Start the foreground service;
 
-    ForegroundEventService.startBackgroundService({title: "My Application", body: "My application is working foreground!", interval: 60000}).then((res) => {
+    ForegroundEventService.startBackgroundService({title: "My Application", body: "My application is working foreground!", interval: 60000, icon: "your_icon_drawable_name"}).then((res) => {
       console.log("ForegroundEventService", res);
     }).catch((err) => {
       console.error("ForegroundEventService start Error", err);

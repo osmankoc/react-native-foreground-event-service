@@ -1,7 +1,7 @@
 
 {
   "name": "react-native-foreground-event-service",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "React Native Foreground Service with interval event",
   "main": "index.js",
   "scripts": {
@@ -14,5 +14,13 @@
   "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2"
-  }
+  },
+  "homepage": "https://github.com/osmankoc/react-native-foreground-event-service#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osmankoc/react-native-foreground-event-service"
+  },
+  "bugs": { "url" : "https://github.com/osmankoc/react-native-foreground-event-service/issues",
+  "email" : "osman.nuri.koc@gmail.com"
+}
 }

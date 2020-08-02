@@ -1,6 +1,7 @@
 
 package com.ForegroundEventLib;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -43,7 +44,7 @@ public class RNForegroundEventServiceModule extends ReactContextBaseJavaModule i
     mForegroundServiceIntent.putExtra("title", "Foreground Service");
     mForegroundServiceIntent.putExtra("sBody", "Your application works.");
     mForegroundServiceIntent.putExtra("interval", SERVICE_INTERVAL);
-    mForegroundServiceIntent.putExtra("icon", "");
+    mForegroundServiceIntent.putExtra("icon", getIconId(""));
     Log.i(TAG, "Module contructed");
     createEventReceiver();
     registerEventReceiver();
@@ -61,6 +62,30 @@ public class RNForegroundEventServiceModule extends ReactContextBaseJavaModule i
     return constants;
   }
 
+  private int getIconId(String icon) {
+    String packageName= mContext.getPackageName();
+    if (icon == null || icon == "") {
+      icon = "ic_stat_foreground";
+      //packageName = "com.ForegroundEventLib";
+
+    }
+    Log.d(TAG, "Icon : " + icon);
+    int iconId = mContext.getResources().getIdentifier(icon, "mipmap", packageName);
+    if (iconId <= 0)
+      iconId = mContext.getResources().getIdentifier(icon, "drawable", packageName);
+    Log.d(TAG, "Icon Id : " + iconId);
+    return iconId;
+  }
+
+
+//  private int getResourceIdForResourceName(String resourceName) {
+//    int resourceId = mContext.getResources().getIdentifier(resourceName, "drawable", mContext.getPackageName());
+//    if (resourceId == 0) {
+//      resourceId = mContext.getResources().getIdentifier(resourceName, "mipmap", mContext.getPackageName());
+//    }
+//    return resourceId;
+//  }
+//
 
   @ReactMethod
   public void startBackgroundService(@Nullable ReadableMap conf, Promise promise) {
@@ -82,7 +107,7 @@ public class RNForegroundEventServiceModule extends ReactContextBaseJavaModule i
             break;
           case "icon":
             mForegroundServiceIntent.removeExtra("icon");
-            mForegroundServiceIntent.putExtra("icon", conf.getString(tKey));
+            mForegroundServiceIntent.putExtra("icon", getIconId(conf.getString(tKey)));
             break;
           case "interval":
             mForegroundServiceIntent.removeExtra("interval");
@@ -95,6 +120,8 @@ public class RNForegroundEventServiceModule extends ReactContextBaseJavaModule i
       Log.i(TAG, "Configuration is set!");
     }
 
+
+
     if(isServiceRunningInForeground()) {
       Log.i(TAG, "Foreground Service is already working!");
       promise.resolve("Service is already working!");
@@ -103,7 +130,7 @@ public class RNForegroundEventServiceModule extends ReactContextBaseJavaModule i
     ComponentName componentName = mContext.startService(mForegroundServiceIntent);
     if (componentName != null) {
       Log.i(TAG, "Foreground Service started");
-        promise.resolve("Foreground Service started");
+      promise.resolve("Foreground Service started");
     } else {
       Log.e(TAG, "Foreground service is not started");
       promise.reject("ERROR_SERVICE_ERROR", "Foreground Service: Foreground service is not started");

@@ -43,7 +43,7 @@ public class ForegroundSvc extends Service {
         String title = intent.getStringExtra("title");
         String input = intent.getStringExtra("sBody");
         SVC_INTERVAL = intent.getIntExtra("interval", 60000);
-        String icon = intent.getStringExtra("icon");
+        int icon = intent.getIntExtra("icon", 0);
 
         createNotificationChannel();
         Notification notification = createNotification(title, input, icon);
@@ -64,14 +64,6 @@ public class ForegroundSvc extends Service {
         return START_STICKY;
     }
 
-
-    private int getResourceIdForResourceName(Context context, String resourceName) {
-        int resourceId = context.getResources().getIdentifier(resourceName, "drawable", context.getPackageName());
-        if (resourceId == 0) {
-            resourceId = context.getResources().getIdentifier(resourceName, "mipmap", context.getPackageName());
-        }
-        return resourceId;
-    }
 
     private void createLocationPendingIntent() {
         if(mBackgroundServicePendingIntent != null)
@@ -104,7 +96,7 @@ public class ForegroundSvc extends Service {
     }
 
 
-    private Notification createNotification(String title, String body, String icon) {
+    private Notification createNotification(String title, String body, int icon) {
 
         Intent notificationIntent = new Intent(this, getMainActivityClass(getApplicationContext()));
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
@@ -113,14 +105,9 @@ public class ForegroundSvc extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(body)
-
+                .setSmallIcon(icon)
                 .setContentIntent(pendingIntent);
-        //.build();
-        if(icon != null && icon != ""){
-            notificationBuilder.setSmallIcon(getResourceIdForResourceName(getApplicationContext(), icon));
-        } else {
-            notificationBuilder.setSmallIcon(getResourceIdForResourceName(getApplicationContext(), "ic_launcher")); //(R.mipmap.ic_launcher);
-        }
+
         return notificationBuilder.build();
     }
 
